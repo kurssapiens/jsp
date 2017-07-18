@@ -7,12 +7,16 @@ package pl.sda.standalone;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -180,7 +184,22 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSerializeActionPerformed
 
     private void btnDeserializeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeserializeActionPerformed
-        // TODO add your handling code here:
+        User newUser;
+        
+        try {
+            FileInputStream file = new FileInputStream("serializable.txt");
+            ObjectInputStream oin = new ObjectInputStream(file);
+            newUser = (User) oin.readObject();
+            txtFirstName.setText(newUser.getFirstName());
+            txtLastName.setText(newUser.getLastName());
+            oin.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_btnDeserializeActionPerformed
 
     /**
